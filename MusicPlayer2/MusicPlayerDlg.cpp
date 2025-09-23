@@ -575,7 +575,7 @@ void CMusicPlayerDlg::LoadConfig()
     theApp.m_app_setting_data.use_old_style_specturm = ini.GetBool(L"config", L"use_old_style_specturm", false);
     theApp.m_app_setting_data.show_album_cover = ini.GetBool(L"config", L"show_album_cover", 1);
     theApp.m_app_setting_data.album_cover_fit = static_cast<CDrawCommon::StretchMode>(ini.GetInt(L"config", L"album_cover_fit", 1));
-    theApp.m_app_setting_data.enable_background = ini.GetBool(L"config", L"enable_background", true);
+    theApp.m_app_setting_data.enable_background = ini.GetBool(L"config", L"enable_background", false);
     theApp.m_app_setting_data.album_cover_as_background = ini.GetBool(L"config", L"album_cover_as_background", true);
     theApp.m_lyric_setting_data.cortana_show_album_cover = ini.GetBool(L"config", L"cortana_show_album_cover", 1);
     theApp.m_lyric_setting_data.cortana_icon_beat = ini.GetBool(L"config", L"cortana_icon_beat", 0);

@@ -37,8 +37,10 @@ using std::pair;
 //#endif
 
 //引用taglib库
-#ifdef _M_X64
+#if defined(_M_X64)
 #pragma comment(lib,"tag_x64.lib")
+#elif defined(_M_ARM64)
+#pragma comment(lib,"tag_arm64.lib")
 #else
 #pragma comment(lib,"tag.lib")
 #endif

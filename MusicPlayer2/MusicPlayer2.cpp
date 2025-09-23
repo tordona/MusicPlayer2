@@ -390,7 +390,9 @@ void CMusicPlayerApp::CheckUpdate(bool message)
     }
 
     version = update_helper.GetVersion();
-#ifdef _M_X64
+#if define(_M_X64)
+    link = update_helper.GetLink64();
+#elif define(_M_ARM64)
     link = update_helper.GetLink64();
 #else
     link = update_helper.GetLink();
@@ -506,7 +508,7 @@ void CMusicPlayerApp::LoadConfig()
 {
     CIniHelper ini(m_config_path);
     wstring config_version = ini.GetString(L"app", L"version", L"");
-    m_general_setting_data.check_update_when_start = ini.GetBool(L"general", L"check_update_when_start", true);
+    m_general_setting_data.check_update_when_start = ini.GetBool(L"general", L"check_update_when_start", false);
     // m_general_setting_data.language = static_cast<Language>(ini.GetInt(L"general", L"language", 0));
     m_general_setting_data.language_ = ini.GetString(L"general", L"language_", L"");     // 留空表示“跟随系统”
     if (!CWinVersionHelper::IsWindows81OrLater())
