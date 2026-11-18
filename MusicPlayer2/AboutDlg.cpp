@@ -29,8 +29,10 @@ bool CAboutDlg::InitializeControls()
     temp += L" (For WinXP)";
 #endif // COMPILE_FOR_WINXP
 
-#ifdef _M_X64
+#if defined(_M_X64)
     temp += L" (x64)";
+#elif defined(_M_ARM64)
+    temp += L" (ARM64)";
 #endif
 
 #ifdef _DEBUG

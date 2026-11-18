@@ -362,9 +362,12 @@ void CPlaySettingsDlg::OnNMClickFfmpegDownSyslink(NMHDR* pNMHDR, LRESULT* pResul
     const wstring& info = theApp.m_str_table.LoadText(L"MSG_OPT_PLAY_CORE_FFMPEG_DL_INFO");
     if (MessageBox(info.c_str(), NULL, MB_ICONINFORMATION | MB_YESNO) == IDYES)
     {
-        ShellExecute(NULL, _T("open"), _T("https://github.com/lifegpc/ffmpeg_core/releases"), NULL, NULL, SW_SHOW);
+        #if defined (_M_ARM64)
+            ShellExecute(NULL, _T("open"), _T("https://github.com/tordona/ffmpeg_core/releases/latest"), NULL, NULL, SW_SHOW);
+        #else
+            ShellExecute(NULL, _T("open"), _T("https://github.com/lifegpc/ffmpeg_core/releases/latest"), NULL, NULL, SW_SHOW);
+        #endif
     }
-
     *pResult = 0;
 }
 
