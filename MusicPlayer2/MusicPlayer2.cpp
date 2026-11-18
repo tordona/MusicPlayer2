@@ -394,10 +394,10 @@ void CMusicPlayerApp::CheckUpdate(bool message)
     }
 
     version = update_helper.GetVersion();
-#if define(_M_X64)
+#if defined(_M_X64)
     link = update_helper.GetLink64();
-#elif define(_M_ARM64)
-    link = update_helper.GetLink64();
+#elif defined(_M_ARM64)
+    link = update_helper.GetLinkArm64();
 #else
     link = update_helper.GetLink();
 #endif

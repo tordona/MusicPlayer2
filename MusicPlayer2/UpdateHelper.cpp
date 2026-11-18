@@ -22,13 +22,22 @@ bool CUpdateHelper::CheckForUpdate()
 {
     wstring version_info;
     //使用GitHub更新源
+#ifdef _M_ARM64
+    if (true)
+    {
+        const wchar_t* raw_url = L"https://raw.githubusercontent.com/tordona/MusicPlayer2/arm64/version.info";
+        const wchar_t* blob_url = L"https://github.com/tordona/MusicPlayer2/blob/arm64/version.info";
+#else
     if (m_update_source == UpdateSource::GitHubSource)
     {
-        if (CInternetCommon::GetURL(L"https://raw.githubusercontent.com/zhongyang219/MusicPlayer2/master/version.info", version_info))		//获取版本信息
+        const wchar_t* raw_url = L"https://raw.githubusercontent.com/zhongyang219/MusicPlayer2/master/version.info";
+        const wchar_t* blob_url = L"https://github.com/zhongyang219/MusicPlayer2/blob/master/version.info";
+#endif
+        if (CInternetCommon::GetURL(raw_url, version_info))		//获取版本信息
         {
             m_row_data = true;
         }
-        else if (CInternetCommon::GetURL(L"https://github.com/zhongyang219/MusicPlayer2/blob/master/version.info", version_info))		//获取版本信息
+        else if (CInternetCommon::GetURL(blob_url, version_info))		//获取版本信息
         {
             m_row_data = false;
         }
@@ -68,9 +77,14 @@ void CUpdateHelper::ParseUpdateInfo(wstring version_info)
     version_xml.LoadXMLContentDirect(version_info);
 
     m_version = version_xml.GetNode(L"version");
+#ifdef _M_ARM64
+    wstring str_source_tag = L"GitHub";
+#else
     wstring str_source_tag = (m_update_source == UpdateSource::GitHubSource ? L"GitHub" : L"Gitee");
+#endif
     m_link64 = version_xml.GetNode(L"link_x64", str_source_tag.c_str());
     m_link = version_xml.GetNode(L"link", str_source_tag.c_str());
+    m_linkarm64 = version_xml.GetNode(L"link_arm64", str_source_tag.c_str());
     CString contents_zh_cn = version_xml.GetNode(L"contents_zh_cn", L"update_contents").c_str();
     CString contents_en = version_xml.GetNode(L"contents_en", L"update_contents").c_str();
     contents_zh_cn.Replace(L"\\n", L"\r\n");
@@ -92,6 +106,11 @@ const std::wstring& CUpdateHelper::GetLink() const
 const std::wstring& CUpdateHelper::GetLink64() const
 {
     return m_link64;
+}
+
+const std::wstring& CUpdateHelper::GetLinkArm64() const
+{
+    return m_linkarm64;
 }
 
 const std::wstring& CUpdateHelper::GetContentsEn() const
